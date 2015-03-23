@@ -16,13 +16,17 @@
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
-			var geometry = new THREE.PlaneGeometry( 30, 9, 32 );
-			var material = new THREE.MeshBasicMaterial( { color: 0x00ff00, side: THREE.DoubleSide} );
+			var geometry = new THREE.PlaneGeometry( 90, 8, 32 );
+			var texture = THREE.ImageUtils.loadTexture( 'textures/grass.jpg' );
+			var material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
 			var plane = new THREE.Mesh( geometry, material );
 			plane.rotation.x = 90;
+
+
 			scene.add( plane );
 
-			camera.position.z = 5;
+			camera.position.z = 4;
+			camera.position.y=2
 
 			var render = function () {
 				requestAnimationFrame( render );
