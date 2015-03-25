@@ -1,5 +1,4 @@
 function createGroundSurface(dimensionX, dimensionY, textureIMG, anisotropy){
-
 	var geometry = new THREE.PlaneGeometry( dimensionX, dimensionY);
 	var texture = THREE.ImageUtils.loadTexture( textureIMG );
 	texture.anisotropy = anisotropy;
@@ -8,9 +7,20 @@ function createGroundSurface(dimensionX, dimensionY, textureIMG, anisotropy){
 	return plane;
 }
 
+function createSkySphere(radius, textureIMG){
+	var geometry = new THREE.SphereGeometry(radius);
+	var texture = THREE.ImageUtils.loadTexture( textureIMG );
+	var material = new THREE.MeshBasicMaterial( {map: texture, side: THREE.DoubleSide} );
+	var sphere = new THREE.Mesh( geometry, material );
+	return sphere;
+}
+
 function createSceneObjects(sceneObject){
 	var ground = createGroundSurface(400, 400, 'textures/grass3.jpg', renderer.getMaxAnisotropy());
-	scene.xBoundary = (0.95*400)/2;
-	scene.yBoundary = (0.95*400)/2;
+	scene.xBoundary = (0.92*400)/2;
+	scene.yBoundary = (0.92*400)/2;
 	scene.add(ground);
+
+	var sky = createSkySphere(200, 'textures/sky.jpg');
+	scene.add(sky);
 }

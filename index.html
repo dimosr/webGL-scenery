@@ -26,8 +26,8 @@
     		var cameraEquipment = createCameraEquipment();
     		scene.add(cameraEquipment.neck);
 
-			document.addEventListener("keydown", onDocumentKeyDown, false); 
-			document.addEventListener("keyup", onDocumentKeyUp, false);
+			document.addEventListener("keydown", onDocumentKeyDown, true); 
+			document.addEventListener("keyup", onDocumentKeyUp, true);
 
 			var render = function () {
 				requestAnimationFrame( render );
