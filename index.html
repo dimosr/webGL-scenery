@@ -8,63 +8,28 @@
 	</head>
 	<body>
 		<script src="js/three.min.js"></script>
+		<script src="js/scene-objects.js"></script>
+		<script src="js/lib.js"></script>
+		<script src="js/camera.js"></script>
+		<script src="js/handlers.js"></script>
 		<script>
 			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-
-			var cameraHolder = new THREE.Object3D();
-			cameraHolder.add( camera );
 
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
-			var geometry = new THREE.PlaneGeometry( 150, 150);
-			var texture = THREE.ImageUtils.loadTexture( 'textures/grass3.jpg' );
-			texture.anisotropy = renderer.getMaxAnisotropy();
-			var material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
-			var plane = new THREE.Mesh( geometry, material );
-			scene.add(plane);
-
-			var neck = new THREE.Object3D();
-    		neck.rotateOnAxis(new THREE.Vector3(1, 0, 0), degInRad(90));
-    		neck.up = new THREE.Vector3(0, 0, 1);
-    		neck.position.z = 4;
-    		neck.position.y = 0;
-
-
-			neck.add(camera);
-			scene.add( neck );
+			createSceneObjects(scene);
+			
+    		var cameraEquipment = createCameraEquipment();
+    		scene.add(cameraEquipment.neck);
 
 			document.addEventListener("keydown", onDocumentKeyDown, false); 
 
-			function onDocumentKeyDown(event){ 
-				var keyCode = event.which;
-				if(keyCode == 37){
-					neck.rotation.y += degInRad(2);
-				}
-				if(keyCode == 39){
-					neck.rotation.y -= degInRad(2);
-				}
-				if(keyCode == 38){
-					neck.translateZ(-1);
-				}
-				if(keyCode == 40){
-					neck.translateZ(+1)
-				}
-			}
-
 			var render = function () {
 				requestAnimationFrame( render );
-
-				renderer.render(scene, camera);
-				
+				renderer.render(scene, cameraEquipment.getCamera());
 			};
-
-			function degInRad(deg) {
-    			return deg * Math.PI / 180;
-			}  
-
 			render();
 		</script>
 	</body>
