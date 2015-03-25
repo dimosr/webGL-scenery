@@ -12,42 +12,57 @@
 			var scene = new THREE.Scene();
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
+			var cameraHolder = new THREE.Object3D();
+			cameraHolder.add( camera );
+
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
-			var geometry = new THREE.PlaneGeometry( 90, 8, 32 );
+			var geometry = new THREE.PlaneGeometry( 150, 150);
 			var texture = THREE.ImageUtils.loadTexture( 'textures/grass.jpg' );
 			var material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
 			var plane = new THREE.Mesh( geometry, material );
-			plane.rotation.x = 90;
+			scene.add(plane);
+
+			var neck = new THREE.Object3D();
+    		neck.rotateOnAxis(new THREE.Vector3(1, 0, 0), degInRad(90));
+    		neck.up = new THREE.Vector3(0, 0, 1);
+    		neck.position.z = 3;
+    		neck.position.y = 0;
 
 
-			scene.add( plane );
-
-			camera.position.z = 4;
-			camera.position.y=2
+			neck.add(camera);
+			scene.add( neck );
 
 			document.addEventListener("keydown", onDocumentKeyDown, false); 
 
 			function onDocumentKeyDown(event){ 
 				var keyCode = event.which;
 				if(keyCode == 37){
-					camera.rotation.y += 1*(Math.PI/180);
+					neck.rotation.y += degInRad(2);
 				}
 				if(keyCode == 39){
-					camera.rotation.y -= 1*(Math.PI/180);
+					neck.rotation.y -= degInRad(2);
+				}
+				if(keyCode == 38){
+					neck.translateZ(-1);
+				}
+				if(keyCode == 40){
+					neck.translateZ(+1)
 				}
 			}
 
 			var render = function () {
 				requestAnimationFrame( render );
 
-				
-
 				renderer.render(scene, camera);
 				
 			};
+
+			function degInRad(deg) {
+    			return deg * Math.PI / 180;
+			}  
 
 			render();
 		</script>
