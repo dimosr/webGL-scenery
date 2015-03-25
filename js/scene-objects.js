@@ -9,6 +9,6 @@ function createGroundSurface(dimensionX, dimensionY, textureIMG, anisotropy){
 }
 
 function createSceneObjects(sceneObject){
-	var ground = createGroundSurface(150, 150, 'textures/grass3.jpg', renderer.getMaxAnisotropy());
+	var ground = createGroundSurface(400, 400, 'textures/grass3.jpg', renderer.getMaxAnisotropy());
 	scene.add(ground);
 }

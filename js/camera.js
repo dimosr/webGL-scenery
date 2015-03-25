@@ -4,7 +4,10 @@ function createCameraEquipment(){
 	neck = new THREE.Object3D();
 	neck.rotateOnAxis(new THREE.Vector3(1, 0, 0), degInRad(90));
 	neck.up = new THREE.Vector3(0, 0, 1);
-	neck.position.z = 4;
+	neck.position.z = 8;
+	neck.getNeckOffsetY = function(){
+		return 8;
+	}
 	neck.position.y = 0;
 	neck.add(camera);
 	cameraEquipment = {

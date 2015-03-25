@@ -14,6 +14,7 @@
 		<script src="js/handlers.js"></script>
 		<script>
 			var scene = new THREE.Scene();
+			var lastTime = 0, joggingAngle = 0, elapsed=0;
 
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight );
@@ -29,6 +30,12 @@
 			var render = function () {
 				requestAnimationFrame( render );
 				renderer.render(scene, cameraEquipment.getCamera());
+
+				var timeNow = new Date().getTime();
+    			if (lastTime != 0) {
+      				elapsed = timeNow - lastTime;
+      			}
+      			lastTime = timeNow;
 			};
 			render();
 		</script>
