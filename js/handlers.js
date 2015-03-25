@@ -1,13 +1,14 @@
 function onDocumentKeyDown(event){ 
 	var keyCode = event.which;
+	keyMap[keyCode] = true;
 	var cameraNeck = cameraEquipment.getNeck();
-	if(keyCode == 37){
+	if(keyMap[37] == true){
 		cameraNeck.rotateOnAxis(new THREE.Vector3(0,1,0), degInRad(4));
 	}
-	if(keyCode == 39){
+	if(keyMap[39] == true){
 		cameraNeck.rotateOnAxis(new THREE.Vector3(0,1,0), degInRad(-4));
 	}
-	if(keyCode == 38){
+	if(keyMap[38] == true){
 		cameraNeck.translateZ(-2);
 		if(cameraNeck.position.x > scene.xBoundary)
 			cameraNeck.position.x = scene.xBoundary;
@@ -21,7 +22,7 @@ function onDocumentKeyDown(event){
 		joggingAngle += elapsed * 0.3;
         cameraNeck.position.z = Math.sin(degInRad(joggingAngle)) / 0.7 + cameraNeck.getNeckOffsetY();
 	}
-	if(keyCode == 40){
+	if(keyMap[40] == true){
 		cameraNeck.translateZ(+2);
 		if(cameraNeck.position.x > scene.xBoundary)
 			cameraNeck.position.x = scene.xBoundary;
@@ -35,4 +36,9 @@ function onDocumentKeyDown(event){
 		joggingAngle += elapsed * 0.3;
         cameraNeck.position.z = Math.sin(degInRad(joggingAngle)) / 1 + cameraNeck.getNeckOffsetY();
 	}
+}
+
+function onDocumentKeyUp(event){
+	var keyCode = event.which;
+	keyMap[keyCode] = false;
 }
