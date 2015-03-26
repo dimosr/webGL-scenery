@@ -16,11 +16,11 @@ function createSkySphere(radius, textureIMG){
 }
 
 function createSceneObjects(sceneObject){
-	var ground = createGroundSurface(400, 400, 'textures/grass3.jpg', renderer.getMaxAnisotropy());
-	scene.xBoundary = (0.92*400)/2;
-	scene.yBoundary = (0.92*400)/2;
+	var ground = createGroundSurface(2000, 2000, 'textures/grass3.jpg', renderer.getMaxAnisotropy());
+	scene.xBoundary = (0.92*2000)/2;
+	scene.yBoundary = (0.92*2000)/2;
 	scene.add(ground);
 
-	var sky = createSkySphere(200, 'textures/sky.jpg');
+	var sky = createSkySphere(1000, 'textures/sky.jpg');
 	scene.add(sky);
 }
