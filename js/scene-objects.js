@@ -12,9 +12,15 @@ function createGroundSurface(dimensionX, dimensionY, textureIMG, anisotropy){
 function createSkySphere(radius, textureIMG){
 	var geometry = new THREE.SphereGeometry(radius);
 	var texture = new THREE.ImageUtils.loadTexture( textureIMG );
-	//texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-    //texture.repeat.set(2,2);
 	var material = new THREE.MeshBasicMaterial( {map: texture, side: THREE.DoubleSide} );
+	var sphere = new THREE.Mesh( geometry, material );
+	return sphere;
+}
+
+function createCloud(size){
+	var geometry = new THREE.SphereGeometry(size);
+	var material = new THREE.MeshBasicMaterial( { color: 0xb8b894, transparent: true } );
+	material.opacity = 0.3;
 	var sphere = new THREE.Mesh( geometry, material );
 	return sphere;
 }
@@ -27,4 +33,8 @@ function createSceneObjects(sceneObject){
 
 	var sky = createSkySphere(1000, 'textures/sky.jpg');
 	scene.add(sky);
+
+	var cloud = createCloud(25);
+	cloud.translateZ(100);
+	scene.add(cloud);
 }

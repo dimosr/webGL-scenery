@@ -10,6 +10,7 @@ function onDocumentKeyUp(event){
 
 function executeMovement(){
 	var cameraNeck = cameraEquipment.getNeck();
+	var camera = cameraEquipment.getCamera();
 	if(keyMap[37] == true){
 		cameraNeck.rotateOnAxis(new THREE.Vector3(0,1,0), degInRad(4));
 	}
@@ -31,5 +32,11 @@ function executeMovement(){
 		}
 		joggingAngle += elapsed * 0.4;
         cameraNeck.position.z = Math.sin(degInRad(joggingAngle)) / 0.15 + cameraNeck.getNeckOffsetY();
+	}
+	if(keyMap[82] == true){
+		camera.rotateOnAxis(new THREE.Vector3(1,0,0), degInRad(8));
+	}
+	if(keyMap[70] == true){
+		camera.rotateOnAxis(new THREE.Vector3(1,0,0), degInRad(-8));
 	}
 }
