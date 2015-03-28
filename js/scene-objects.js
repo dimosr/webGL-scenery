@@ -17,24 +17,76 @@ function createSkySphere(radius, textureIMG){
 	return sphere;
 }
 
-function createCloud(size){
-	var geometry = new THREE.SphereGeometry(size);
-	var material = new THREE.MeshBasicMaterial( { color: 0xb8b894, transparent: true } );
-	material.opacity = 0.3;
-	var sphere = new THREE.Mesh( geometry, material );
-	return sphere;
+function createCloud(size, positionX, positionY, positionZ, opacity){
+	var container = new THREE.Object3D();
+	var material = new THREE.MeshBasicMaterial( { color: 0xe6e6e6, transparent: true } );
+	material.opacity = opacity;
+	var geometry = new THREE.TorusKnotGeometry( size);
+	var torusKnot = new THREE.Mesh( geometry, material );
+	container.add(torusKnot);
+	container.translateZ(positionZ);
+	container.translateX(positionX);
+	container.translateY(positionY);
+	return container;
 }
 
 function createSceneObjects(sceneObject){
-	var ground = createGroundSurface(2000, 2000, 'textures/grass.png', renderer.getMaxAnisotropy());
-	scene.xBoundary = (0.92*2000)/2;
-	scene.yBoundary = (0.92*2000)/2;
+	var terrainDimension = 2000;
+	var ground = createGroundSurface(terrainDimension, terrainDimension, 'textures/grass.png', renderer.getMaxAnisotropy());
+	scene.xBoundary = (0.92*terrainDimension)/2;
+	scene.yBoundary = (0.92*terrainDimension)/2;
 	scene.add(ground);
 
-	var sky = createSkySphere(1000, 'textures/sky.jpg');
+	var sky = createSkySphere((terrainDimension/2), 'textures/sky.jpg');
 	scene.add(sky);
 
-	var cloud = createCloud(25);
-	cloud.translateZ(100);
-	scene.add(cloud);
+	var spot1 = Math.floor(terrainDimension/10);
+	var spot2 = Math.floor(terrainDimension/5);
+	var spot3 = Math.floor(terrainDimension/3.333);
+	var spot4 = Math.floor(terrainDimension/4);
+	var spot5 = Math.floor(terrainDimension/2.85);
+	var spot6 = Math.floor(terrainDimension/2.5);
+	var cloud1A = createCloud(25, spot1, spot1, spot2, 0.7);
+	scene.add(cloud1A);
+	var cloud2A = createCloud(50, spot2, spot1, spot2, 0.85);
+	scene.add(cloud2A);
+	var cloud3A = createCloud(70, spot1, spot2, spot2, 0.95);
+	scene.add(cloud3A);
+	var cloud4A = createCloud(90, spot3, spot1, spot2, 0.65);
+	scene.add(cloud4A);
+
+	var cloud1B = createCloud(25, spot1, spot1, spot4, 0.7);
+	scene.add(cloud1B);
+	var cloud2B = createCloud(50, spot2, spot1, spot3, 0.85);
+	scene.add(cloud2B);
+	var cloud3B = createCloud(70, spot1, spot2, spot5, 0.95);
+	scene.add(cloud3B);
+	var cloud4B = createCloud(90, spot3, spot1, spot6, 0.65);
+	scene.add(cloud4B);
+
+	var cloud5A = createCloud(50, -spot2, -spot1, spot2, 0.65);
+	scene.add(cloud5A);
+	var cloud6A = createCloud(70, -spot1, -spot2, spot2, 0.95);
+	scene.add(cloud6A);
+	var cloud7A = createCloud(90, -spot3, -spot1, spot2, 0.85);
+	scene.add(cloud7A);
+
+	var cloud5B = createCloud(50, -spot2, -spot1, spot3, 0.65);
+	scene.add(cloud5B);
+	var cloud6B = createCloud(70, -spot1, -spot1, spot5, 0.95);
+	scene.add(cloud6B);
+	var cloud7B = createCloud(90, -spot3, -spot1, spot5, 0.85);
+	scene.add(cloud7B);
+
+	var cloud8 = createCloud(50, -spot2, spot1, spot2, 0.65);
+	scene.add(cloud8);
+	var cloud9 = createCloud(70, -spot1, spot2, spot2, 0.95);
+	scene.add(cloud9);
+	var cloud10 = createCloud(90, -spot3, spot1, spot2, 0.85);
+	scene.add(cloud10);
+
+	var cloud11 = createCloud(50, spot2, -spot2, spot2, 0.65);
+	scene.add(cloud11);
+	var cloud12 = createCloud(70, spot4, -spot1, spot2, 0.95);
+	scene.add(cloud12);
 }
