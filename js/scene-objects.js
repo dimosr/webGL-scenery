@@ -81,6 +81,17 @@ function createCloud(size, positionX, positionY, positionZ, opacity){
 	return torusKnot;
 }
 
+function createSun(radius, textureIMG, positionX, positionY, positionZ){
+	var geometry = new THREE.SphereGeometry(radius);
+	var texture = new THREE.ImageUtils.loadTexture( textureIMG );
+	var material = new THREE.MeshBasicMaterial( {map: texture, side: THREE.DoubleSide} );
+	var sphere = new THREE.Mesh( geometry, material );
+	sphere.translateZ(positionZ);
+	sphere.translateX(positionX);
+	sphere.translateY(positionY);
+	return sphere;
+}
+
 function createSceneObjects(sceneObject){
 	var terrainDimension = 2000;
 	var ground = createGroundSurface(terrainDimension, terrainDimension, 'textures/grass.png', renderer.getMaxAnisotropy());
@@ -92,4 +103,7 @@ function createSceneObjects(sceneObject){
 	scene.add(sky);
 
 	generateClouds(terrainDimension);
+
+	var sun = createSun(Math.floor(terrainDimension/40), 'textures/sun.jpg', 200, 200, 100);
+	scene.add(sun);
 }
