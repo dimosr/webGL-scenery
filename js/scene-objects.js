@@ -82,14 +82,23 @@ function createCloud(size, positionX, positionY, positionZ, opacity){
 }
 
 function createSun(radius, textureIMG, positionX, positionY, positionZ){
+	var sunContainer = new THREE.Object3D();
 	var geometry = new THREE.SphereGeometry(radius);
 	var texture = new THREE.ImageUtils.loadTexture( textureIMG );
-	var material = new THREE.MeshBasicMaterial( {map: texture, side: THREE.DoubleSide} );
-	var sphere = new THREE.Mesh( geometry, material );
-	sphere.translateZ(positionZ);
-	sphere.translateX(positionX);
-	sphere.translateY(positionY);
-	return sphere;
+	var material = new THREE.MeshPhongMaterial( {map: texture, side: THREE.DoubleSide, shininess: 100 } );
+	var sunSphere = new THREE.Mesh( geometry, material );
+
+	var directionalLight = new THREE.DirectionalLight(0xffffff);
+	directionalLight.position.set((-10)*radius, (-10)*radius, (-15)*radius);
+
+	sunContainer.add(sunSphere);
+	sunContainer.add(directionalLight);
+
+	sunContainer.translateZ(positionZ);
+	sunContainer.translateX(positionX);
+	sunContainer.translateY(positionY);
+	
+	return sunContainer;
 }
 
 function createSceneObjects(sceneObject){
@@ -106,4 +115,7 @@ function createSceneObjects(sceneObject){
 
 	var sun = createSun(Math.floor(terrainDimension/40), 'textures/sun.jpg', 200, 200, 100);
 	scene.add(sun);
+
+    var ambientLight = new THREE.AmbientLight(0xffffff);
+    scene.add(ambientLight);
 }

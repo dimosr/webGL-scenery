@@ -18,6 +18,8 @@
 			var keyMap = [];
 
 			var renderer = new THREE.WebGLRenderer();
+			renderer.shadowMapEnabled = true;
+			renderer.shadowMapType = THREE.PCFSoftShadowMap;
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
