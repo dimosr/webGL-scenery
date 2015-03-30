@@ -68,6 +68,8 @@ function generateClouds(terrainDim){
 	scene.add(cloud11);
 	var cloud12 = createCloud(70, spot4, -spot1, spot2, 0.95);
 	scene.add(cloud12);
+	var cloud13 = createCloud(70, spot1, spot1, spot6, 0.75);
+	scene.add(cloud13);
 }
 
 function createCloud(size, positionX, positionY, positionZ, opacity){
@@ -89,7 +91,7 @@ function createSun(radius, textureIMG, positionX, positionY, positionZ){
 	var sunSphere = new THREE.Mesh( geometry, material );
 
 	var directionalLight = new THREE.DirectionalLight(0xffffff);
-	directionalLight.position.set((-10)*radius, (-10)*radius, (-15)*radius);
+	directionalLight.position.set((-3)*radius, (-3)*radius, (-50)*radius);
 
 	sunContainer.add(sunSphere);
 	sunContainer.add(directionalLight);
@@ -113,7 +115,7 @@ function createSceneObjects(sceneObject){
 
 	generateClouds(terrainDimension);
 
-	var sun = createSun(Math.floor(terrainDimension/40), 'textures/sun.jpg', 200, 200, 100);
+	var sun = createSun(Math.floor(terrainDimension/40), 'textures/sun.jpg', 100, 200, 900);
 	scene.add(sun);
 
     var ambientLight = new THREE.AmbientLight(0xffffff);

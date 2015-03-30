@@ -17,7 +17,7 @@
 			var lastTime = 0, joggingAngle = 0, elapsed=0;
 			var keyMap = [];
 
-			var renderer = new THREE.WebGLRenderer();
+			var renderer = new THREE.WebGLRenderer({ antialias: true });
 			renderer.shadowMapEnabled = true;
 			renderer.shadowMapType = THREE.PCFSoftShadowMap;
 			renderer.setSize( window.innerWidth, window.innerHeight );
