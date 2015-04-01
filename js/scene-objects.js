@@ -30,27 +30,41 @@ function createLakeEllipsoid(lakeTextureIMG, positionX, positionY, positionZ, la
 	var lakeMaterial = new THREE.MeshPhongMaterial( {map: lakeTexture, side: THREE.DoubleSide} );
 	var lakeEllipsoid = new THREE.Mesh( lakeGeometry, lakeMaterial );
 
-	var rockParametricEquation = function(u, v){
-		var a=Math.floor(lakeDiameter/25), b=Math.floor(lakeDiameter/25), c=lakeThickness*10;
-		u = u*2*Math.PI;
-		v = v*Math.PI;
-		return new THREE.Vector3( (a*Math.cos(u)*Math.sin(v)), b*Math.sin(u)*Math.sin(v), c*Math.cos(v) );
-	}
-	var rockGeometry = new THREE.ParametricGeometry(rockParametricEquation, 40, 40);
-	var rockTexture = new THREE.ImageUtils.loadTexture( 'textures/rock.png' );
-	var rockMaterial = new THREE.MeshPhongMaterial( {map: rockTexture, side: THREE.DoubleSide} );
-	var rockEllipsoid = new THREE.Mesh( rockGeometry, rockMaterial );
-	rockEllipsoid.translateX((-0.8)*lakeDiameter);
-	rockEllipsoid.translateY((0.55)*lakeDiameter);
-
 	var lakeContainer = new THREE.Object3D();
 	lakeContainer.add(lakeEllipsoid);
-	lakeContainer.add(rockEllipsoid);
+
+	var rocksSettings = [
+		{'scale': 5, 'thick': 50,'xPos': -0.8, 'yPos': 0.55},
+		{'scale': 5, 'thick': 50,'xPos': -1.1, 'yPos': 0.35},
+		{'scale': 12, 'thick': 30,'xPos': -1, 'yPos': +0.15}
+	]
+	for(var i=0; i < 3; i++){
+		var rockParametricEquation = function(u, v){
+			var a=Math.floor(lakeDiameter/(rocksSettings[i].scale)), b=Math.floor(lakeDiameter/(rocksSettings[i].scale)), c=lakeThickness*(rocksSettings[i].thick);
+			u = u*2*Math.PI;
+			v = v*Math.PI;
+			return new THREE.Vector3( (a*Math.cos(u)*Math.sin(v)), b*Math.sin(u)*Math.sin(v), c*Math.cos(v) );
+		}
+		var rockGeometry = new THREE.ParametricGeometry(rockParametricEquation, 40, 40);
+		var rockTexture = new THREE.ImageUtils.loadTexture( 'textures/rock.png' );
+		var rockMaterial = new THREE.MeshPhongMaterial( {map: rockTexture, side: THREE.DoubleSide} );
+		var rockEllipsoid = new THREE.Mesh( rockGeometry, rockMaterial );
+		rockEllipsoid.translateX((rocksSettings[i].xPos)*lakeDiameter);
+		rockEllipsoid.translateY((rocksSettings[i].yPos)*lakeDiameter);
+
+		lakeContainer.add(rockEllipsoid);
+	}
+	
+	
 
 	lakeContainer.translateX(positionX);
 	lakeContainer.translateY(positionY);
 	lakeContainer.translateZ(positionZ);
 	return lakeContainer;
+}
+
+function generateRocks(){
+
 }
 
 function generateClouds(terrainDim){
