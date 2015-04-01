@@ -4,7 +4,7 @@ function createGroundSurface(dimensionX, dimensionY, textureIMG, anisotropy){
 	texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
     texture.repeat.set(50,50);
 	texture.anisotropy = anisotropy;
-	var material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+	var material = new THREE.MeshPhongMaterial({ map: texture, side: THREE.DoubleSide, shininess: 100, specular: 0x33cc33});
 	var plane = new THREE.Mesh( geometry, material );
 	return plane;
 }
@@ -12,10 +12,13 @@ function createGroundSurface(dimensionX, dimensionY, textureIMG, anisotropy){
 function createSkySphere(radius, textureIMG){
 	var geometry = new THREE.SphereGeometry(radius);
 	var texture = new THREE.ImageUtils.loadTexture( textureIMG );
-	var material = new THREE.MeshBasicMaterial( {map: texture, side: THREE.DoubleSide} );
+	texture.minFilter = THREE.NearestFilter;
+	var material = new THREE.MeshPhongMaterial( {map: texture, side: THREE.DoubleSide, specular: 0x000000} );
 	var sphere = new THREE.Mesh( geometry, material );
 	return sphere;
 }
+
+
 
 function generateClouds(terrainDim){
 	var spot1 = Math.floor(terrainDim/10);
@@ -25,55 +28,55 @@ function generateClouds(terrainDim){
 	var spot5 = Math.floor(terrainDim/2.85);
 	var spot6 = Math.floor(terrainDim/2.5);
 
-	var cloud1A = createCloud(25, spot1, spot1, spot2, 0.7);
+	var cloud1A = createCloud(25, spot1, spot1, spot2, 0.9);
 	scene.add(cloud1A);
-	var cloud2A = createCloud(50, spot2, spot1, spot2, 0.85);
+	var cloud2A = createCloud(50, spot2, spot1, spot2, 0.9);
 	scene.add(cloud2A);
 	var cloud3A = createCloud(70, spot1, spot2, spot2, 0.95);
 	scene.add(cloud3A);
-	var cloud4A = createCloud(90, spot3, spot1, spot2, 0.65);
+	var cloud4A = createCloud(90, spot3, spot1, spot2, 0.9);
 	scene.add(cloud4A);
 
-	var cloud1B = createCloud(25, spot1, spot1, spot4, 0.7);
+	var cloud1B = createCloud(25, spot1, spot1, spot4, 0.9);
 	scene.add(cloud1B);
-	var cloud2B = createCloud(50, spot2, spot1, spot3, 0.85);
+	var cloud2B = createCloud(50, spot2, spot1, spot3, 0.9);
 	scene.add(cloud2B);
 	var cloud3B = createCloud(70, spot1, spot2, spot5, 0.95);
 	scene.add(cloud3B);
-	var cloud4B = createCloud(90, spot3, spot1, spot6, 0.7);
+	var cloud4B = createCloud(90, spot3, spot1, spot6, 0.9);
 	scene.add(cloud4B);
 
-	var cloud5A = createCloud(50, -spot2, -spot1, spot2, 0.7);
+	var cloud5A = createCloud(50, -spot2, -spot1, spot2, 0.9);
 	scene.add(cloud5A);
 	var cloud6A = createCloud(70, -spot1, -spot2, spot2, 0.95);
 	scene.add(cloud6A);
-	var cloud7A = createCloud(90, -spot3, -spot1, spot2, 0.85);
+	var cloud7A = createCloud(90, -spot3, -spot1, spot2, 0.9);
 	scene.add(cloud7A);
 
-	var cloud5B = createCloud(50, -spot2, -spot1, spot3, 0.7);
+	var cloud5B = createCloud(50, -spot2, -spot1, spot3, 0.9);
 	scene.add(cloud5B);
 	var cloud6B = createCloud(70, -spot1, -spot1, spot5, 0.95);
 	scene.add(cloud6B);
-	var cloud7B = createCloud(90, -spot3, -spot1, spot5, 0.85);
+	var cloud7B = createCloud(90, -spot3, -spot1, spot5, 0.9);
 	scene.add(cloud7B);
 
-	var cloud8 = createCloud(50, -spot2, spot1, spot2, 0.7);
+	var cloud8 = createCloud(50, -spot2, spot1, spot2, 0.9);
 	scene.add(cloud8);
 	var cloud9 = createCloud(70, -spot1, spot2, spot2, 0.95);
 	scene.add(cloud9);
-	var cloud10 = createCloud(90, -spot3, spot1, spot2, 0.85);
+	var cloud10 = createCloud(90, -spot3, spot1, spot2, 0.9);
 	scene.add(cloud10);
 
-	var cloud11 = createCloud(50, spot2, -spot2, spot2, 0.7);
+	var cloud11 = createCloud(50, spot2, -spot2, spot2, 0.9);
 	scene.add(cloud11);
 	var cloud12 = createCloud(70, spot4, -spot1, spot2, 0.95);
 	scene.add(cloud12);
-	var cloud13 = createCloud(70, spot1, spot1, spot6, 0.75);
+	var cloud13 = createCloud(70, spot1, spot1, spot6, 0.9);
 	scene.add(cloud13);
 }
 
 function createCloud(size, positionX, positionY, positionZ, opacity){
-	var material = new THREE.MeshBasicMaterial( { color: 0xe6e6e6, transparent: true } );
+	var material = new THREE.MeshPhongMaterial( { color: 0xe6e6e6, transparent: true } );
 	material.opacity = opacity;
 	var geometry = new THREE.TorusKnotGeometry( size);
 	var torusKnot = new THREE.Mesh( geometry, material );
@@ -91,7 +94,7 @@ function createSun(radius, textureIMG, positionX, positionY, positionZ){
 	var sunSphere = new THREE.Mesh( geometry, material );
 
 	var directionalLight = new THREE.DirectionalLight(0xffffff);
-	directionalLight.position.set((-3)*radius, (-3)*radius, (-50)*radius);
+	directionalLight.position.set((-6)*radius, (-6)*radius, (-40)*radius);
 
 	sunContainer.add(sunSphere);
 	sunContainer.add(directionalLight);
