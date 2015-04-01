@@ -18,7 +18,40 @@ function createSkySphere(radius, textureIMG){
 	return sphere;
 }
 
+function createLakeEllipsoid(lakeTextureIMG, positionX, positionY, positionZ, lakeDiameter, lakeThickness){
+	var lakeParametricEquation = function(u, v){
+		var a=lakeDiameter, b=lakeDiameter, c=lakeThickness;
+		u = u*2*Math.PI;
+		v = v*Math.PI;
+		return new THREE.Vector3( (a*Math.cos(u)*Math.sin(v)), b*Math.sin(u)*Math.sin(v), c*Math.cos(v) );
+	}
+	var lakeGeometry = new THREE.ParametricGeometry(lakeParametricEquation, 40, 40);
+	var lakeTexture = new THREE.ImageUtils.loadTexture( lakeTextureIMG );
+	var lakeMaterial = new THREE.MeshPhongMaterial( {map: lakeTexture, side: THREE.DoubleSide} );
+	var lakeEllipsoid = new THREE.Mesh( lakeGeometry, lakeMaterial );
 
+	var rockParametricEquation = function(u, v){
+		var a=Math.floor(lakeDiameter/25), b=Math.floor(lakeDiameter/25), c=lakeThickness*10;
+		u = u*2*Math.PI;
+		v = v*Math.PI;
+		return new THREE.Vector3( (a*Math.cos(u)*Math.sin(v)), b*Math.sin(u)*Math.sin(v), c*Math.cos(v) );
+	}
+	var rockGeometry = new THREE.ParametricGeometry(rockParametricEquation, 40, 40);
+	var rockTexture = new THREE.ImageUtils.loadTexture( 'textures/rock.png' );
+	var rockMaterial = new THREE.MeshPhongMaterial( {map: rockTexture, side: THREE.DoubleSide} );
+	var rockEllipsoid = new THREE.Mesh( rockGeometry, rockMaterial );
+	rockEllipsoid.translateX((-0.8)*lakeDiameter);
+	rockEllipsoid.translateY((0.55)*lakeDiameter);
+
+	var lakeContainer = new THREE.Object3D();
+	lakeContainer.add(lakeEllipsoid);
+	lakeContainer.add(rockEllipsoid);
+
+	lakeContainer.translateX(positionX);
+	lakeContainer.translateY(positionY);
+	lakeContainer.translateZ(positionZ);
+	return lakeContainer;
+}
 
 function generateClouds(terrainDim){
 	var spot1 = Math.floor(terrainDim/10);
@@ -120,6 +153,9 @@ function createSceneObjects(sceneObject){
 
 	var sun = createSun(Math.floor(terrainDimension/40), 'textures/sun.jpg', 100, 200, 900);
 	scene.add(sun);
+
+	lake = createLakeEllipsoid("textures/lake.jpg", 600, 600, 0, 700, 5.3);
+	scene.add(lake);
 
     var ambientLight = new THREE.AmbientLight(0xffffff);
     scene.add(ambientLight);
