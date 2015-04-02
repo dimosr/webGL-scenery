@@ -36,9 +36,11 @@ function createLakeEllipsoid(lakeTextureIMG, positionX, positionY, positionZ, la
 	var rocksSettings = [
 		{'scale': 5, 'thick': 50,'xPos': -0.8, 'yPos': 0.55},
 		{'scale': 5, 'thick': 50,'xPos': -1.1, 'yPos': 0.35},
-		{'scale': 12, 'thick': 30,'xPos': -1, 'yPos': +0.15}
+		{'scale': 12, 'thick': 30,'xPos': -1, 'yPos': 0.15},
+		{'scale': 20, 'thick': 20,'xPos': -1.15, 'yPos': 0.1},
+		{'scale': 30, 'thick': 10,'xPos': -1.05, 'yPos': 0.05}
 	]
-	for(var i=0; i < 3; i++){
+	for(var i=0; i < 5; i++){
 		var rockParametricEquation = function(u, v){
 			var a=Math.floor(lakeDiameter/(rocksSettings[i].scale)), b=Math.floor(lakeDiameter/(rocksSettings[i].scale)), c=lakeThickness*(rocksSettings[i].thick);
 			u = u*2*Math.PI;
