@@ -19,16 +19,16 @@ function executeMovement(){
 	}
 	if(keyMap[38] == true){
 		cameraNeck.translateZ(-1);
-		if(Math.pow(cameraNeck.position.x,2) + Math.pow(cameraNeck.position.y,2) > Math.pow(scene.xBoundary,2)){
-			cameraNeck.translateZ(+2);
+		if(!canMoveIn(cameraNeck.position.x, cameraNeck.position.y, scene)){
+			cameraNeck.translateZ(+1);
 		}
 		joggingAngle += elapsed * 0.4;
         cameraNeck.position.z = Math.sin(degInRad(joggingAngle)) / 0.15 + cameraNeck.getNeckOffsetY();
 	}
 	if(keyMap[40] == true){
 		cameraNeck.translateZ(+1);
-		if(Math.pow(cameraNeck.position.x,2) + Math.pow(cameraNeck.position.y,2) > Math.pow(scene.xBoundary,2)){
-			cameraNeck.translateZ(-2);
+		if(!canMoveIn(cameraNeck.position.x, cameraNeck.position.y, scene)){
+			cameraNeck.translateZ(-1);
 		}
 		joggingAngle += elapsed * 0.4;
         cameraNeck.position.z = Math.sin(degInRad(joggingAngle)) / 0.15 + cameraNeck.getNeckOffsetY();
