@@ -5,6 +5,9 @@ function canMoveIn(positionX, positionY, sceneObject){
 	if(!outsideLakeBoundaries(positionX, positionY, sceneObject)){
 		return false;
 	}
+	if(!outsideRockBoundaries(positionX, positionY, sceneObject)){
+		return false;
+	}
 
 	return true;
 }
@@ -28,4 +31,18 @@ function outsideLakeBoundaries(positionX, positionY, scene){
 	else{
 		return true;
 	}
+}
+
+function outsideRockBoundaries(positionX, positionY, scene){
+	var outsideRock = true;
+	for(var i=0; i<scene.lake.rocks.length; i++){
+		var rock = scene.lake.rocks[i];
+		var rockRadius = rock.radius;
+		var rockCenterX = rock.positionX;
+		var rockCenterY = rock.positionY;
+		if( (Math.pow((positionX - rockCenterX),2) + Math.pow((positionY - rockCenterY),2)) < Math.pow(rockRadius,2) ){
+			outsideRock = false;
+		}
+	}
+	return outsideRock;
 }

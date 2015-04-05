@@ -18,9 +18,9 @@ function createSkySphere(radius, textureIMG){
 	return sphere;
 }
 
-function createLakeEllipsoid(lakeTextureIMG, positionX, positionY, positionZ, lakeDiameter, lakeThickness){
+function createLakeEllipsoid(lakeTextureIMG, positionX, positionY, positionZ, lakeRadius, lakeThickness){
 	var lakeParametricEquation = function(u, v){
-		var a=lakeDiameter, b=lakeDiameter, c=lakeThickness;
+		var a=lakeRadius, b=lakeRadius, c=lakeThickness;
 		u = u*2*Math.PI;
 		v = v*Math.PI;
 		return new THREE.Vector3( (a*Math.cos(u)*Math.sin(v)), b*Math.sin(u)*Math.sin(v), c*Math.cos(v) );
@@ -33,6 +33,7 @@ function createLakeEllipsoid(lakeTextureIMG, positionX, positionY, positionZ, la
 	var lakeContainer = new THREE.Object3D();
 	lakeContainer.add(lakeEllipsoid);
 
+	lakeContainer.rocks = [];
 	var rocksSettings = [
 		{'scale': 5, 'thick': 50,'xPos': -0.8, 'yPos': 0.55},
 		{'scale': 5, 'thick': 50,'xPos': -1.1, 'yPos': 0.35},
@@ -47,7 +48,7 @@ function createLakeEllipsoid(lakeTextureIMG, positionX, positionY, positionZ, la
 	]
 	for(var i=0; i < 10; i++){
 		var rockParametricEquation = function(u, v){
-			var a=Math.floor(lakeDiameter/(rocksSettings[i].scale)), b=Math.floor(lakeDiameter/(rocksSettings[i].scale)), c=lakeThickness*(rocksSettings[i].thick);
+			var a=Math.floor(lakeRadius/(rocksSettings[i].scale)), b=Math.floor(lakeRadius/(rocksSettings[i].scale)), c=lakeThickness*(rocksSettings[i].thick);
 			u = u*2*Math.PI;
 			v = v*Math.PI;
 			return new THREE.Vector3( (a*Math.cos(u)*Math.sin(v)), b*Math.sin(u)*Math.sin(v), c*Math.cos(v) );
@@ -56,18 +57,19 @@ function createLakeEllipsoid(lakeTextureIMG, positionX, positionY, positionZ, la
 		var rockTexture = new THREE.ImageUtils.loadTexture( 'textures/rock.png' );
 		var rockMaterial = new THREE.MeshPhongMaterial( {map: rockTexture, side: THREE.DoubleSide} );
 		var rockEllipsoid = new THREE.Mesh( rockGeometry, rockMaterial );
-		rockEllipsoid.translateX((rocksSettings[i].xPos)*lakeDiameter);
-		rockEllipsoid.translateY((rocksSettings[i].yPos)*lakeDiameter);
+		rockEllipsoid.translateX((rocksSettings[i].xPos)*lakeRadius);
+		rockEllipsoid.translateY((rocksSettings[i].yPos)*lakeRadius);
 
 		lakeContainer.add(rockEllipsoid);
+		lakeContainer.rocks.push({'radius': (lakeRadius/(rocksSettings[i].scale)), 'positionX': (rockEllipsoid.position.x + positionX), 'positionY': (rockEllipsoid.position.y + positionY)});
 	}
 	
 	lakeContainer.translateX(positionX);
 	lakeContainer.translateY(positionY);
 	lakeContainer.translateZ(positionZ);
-	lakeContainer.positionX = 600;
-	lakeContainer.positionY = 600;
-	lakeContainer.radius = 730;
+	lakeContainer.positionX = positionX;
+	lakeContainer.positionY = positionY;
+	lakeContainer.radius = lakeRadius*1.04;
 	return lakeContainer;
 }
 
