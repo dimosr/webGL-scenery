@@ -62,11 +62,12 @@ function createLakeEllipsoid(lakeTextureIMG, positionX, positionY, positionZ, la
 		lakeContainer.add(rockEllipsoid);
 	}
 	
-	
-
 	lakeContainer.translateX(positionX);
 	lakeContainer.translateY(positionY);
 	lakeContainer.translateZ(positionZ);
+	lakeContainer.positionX = 600;
+	lakeContainer.positionY = 600;
+	lakeContainer.radius = 730;
 	return lakeContainer;
 }
 
@@ -176,6 +177,7 @@ function createSceneObjects(sceneObject){
 	scene.add(sun);
 
 	lake = createLakeEllipsoid("textures/lake.jpg", 600, 600, 0, 700, 5.3);
+	scene.lake = lake;
 	scene.add(lake);
 
     var ambientLight = new THREE.AmbientLight(0xffffff);
