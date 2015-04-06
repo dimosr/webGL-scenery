@@ -203,6 +203,30 @@ function createTree(height, width, leavesRadius, trunkTextureIMG, leavesTextureI
 	return treeContainer;
 }
 
+function createFirTree(height, width, leavesRadius, trunkTextureIMG, leavesTextureIMG, positionX, positionY, positionZ, type){
+	var treeContainer = new THREE.Object3D();
+
+	var trunkGeometry = new THREE.CylinderGeometry( width, width, height);
+	var trunkTexture = new THREE.ImageUtils.loadTexture( trunkTextureIMG );
+	var trunkMaterial = new THREE.MeshPhongMaterial( {map: trunkTexture, side: THREE.DoubleSide, shininess: 100 } );
+	var trunk = new THREE.Mesh( trunkGeometry, trunkMaterial );
+
+	var leavesGeometry = new THREE.CylinderGeometry(0, 50, height);
+	var leavesTexture = new THREE.ImageUtils.loadTexture( leavesTextureIMG );
+	var leavesMaterial = new THREE.MeshPhongMaterial( {color: 0x33cc33, map: leavesTexture, side: THREE.DoubleSide, shininess: 100} );
+	var leaves = new THREE.Mesh( leavesGeometry, leavesMaterial);
+	leaves.translateY(height/2);
+
+	treeContainer.add(trunk);
+	treeContainer.add(leaves);
+	treeContainer.rotateOnAxis(new THREE.Vector3( 1, 0, 0 ), degInRad(90));
+	treeContainer.translateZ(positionZ);
+	treeContainer.translateY(positionY);
+	treeContainer.translateX(positionX);
+
+	return treeContainer;
+}
+
 function createSceneObjects(sceneObject){
 	var terrainDimension = 2000;
 	var ground = createGroundSurface(terrainDimension, terrainDimension, 'textures/grass.png', renderer.getMaxAnisotropy());
@@ -222,7 +246,7 @@ function createSceneObjects(sceneObject){
 	scene.lake = lake;
 	scene.add(lake);
 
-	tree = createTree(350, 4, 50, 'textures/trunk.png', 'textures/fir.png', 50, 50, 0, 'sphere');
+	tree = createFirTree(350, 4, 50, 'textures/trunk.png', 'textures/fir.png', 50, 50, 0, 'sphere');
 	scene.add(tree);
 
     var ambientLight = new THREE.AmbientLight(0xffffff);
