@@ -84,52 +84,17 @@ function generateClouds(terrainDim){
 	var spot4 = Math.floor(terrainDim/4);
 	var spot5 = Math.floor(terrainDim/2.85);
 	var spot6 = Math.floor(terrainDim/2.5);
-
-	var cloud1A = createCloud(25, spot1, spot1, spot2, 0.9);
-	scene.add(cloud1A);
-	var cloud2A = createCloud(50, spot2, spot1, spot2, 0.9);
-	scene.add(cloud2A);
-	var cloud3A = createCloud(70, spot1, spot2, spot2, 0.95);
-	scene.add(cloud3A);
-	var cloud4A = createCloud(90, spot3, spot1, spot2, 0.9);
-	scene.add(cloud4A);
-
-	var cloud1B = createCloud(25, spot1, spot1, spot4, 0.9);
-	scene.add(cloud1B);
-	var cloud2B = createCloud(50, spot2, spot1, spot3, 0.9);
-	scene.add(cloud2B);
-	var cloud3B = createCloud(70, spot1, spot2, spot5, 0.95);
-	scene.add(cloud3B);
-	var cloud4B = createCloud(90, spot3, spot1, spot6, 0.9);
-	scene.add(cloud4B);
-
-	var cloud5A = createCloud(50, -spot2, -spot1, spot2, 0.9);
-	scene.add(cloud5A);
-	var cloud6A = createCloud(70, -spot1, -spot2, spot2, 0.95);
-	scene.add(cloud6A);
-	var cloud7A = createCloud(90, -spot3, -spot1, spot2, 0.9);
-	scene.add(cloud7A);
-
-	var cloud5B = createCloud(50, -spot2, -spot1, spot3, 0.9);
-	scene.add(cloud5B);
-	var cloud6B = createCloud(70, -spot1, -spot1, spot5, 0.95);
-	scene.add(cloud6B);
-	var cloud7B = createCloud(90, -spot3, -spot1, spot5, 0.9);
-	scene.add(cloud7B);
-
-	var cloud8 = createCloud(50, -spot2, spot1, spot2, 0.9);
-	scene.add(cloud8);
-	var cloud9 = createCloud(70, -spot1, spot2, spot2, 0.95);
-	scene.add(cloud9);
-	var cloud10 = createCloud(90, -spot3, spot1, spot2, 0.9);
-	scene.add(cloud10);
-
-	var cloud11 = createCloud(50, spot2, -spot2, spot2, 0.9);
-	scene.add(cloud11);
-	var cloud12 = createCloud(70, spot4, -spot1, spot2, 0.95);
-	scene.add(cloud12);
-	var cloud13 = createCloud(70, spot1, spot1, spot6, 0.9);
-	scene.add(cloud13);
+	var confs = [[25, spot1, spot1, spot2, 0.9], [50, spot2, spot1, spot2, 0.9], [70, spot1, spot2, spot2, 0.95], [90, spot3, spot1, spot2, 0.9],
+				[25, spot1, spot1, spot4, 0.9], [50, spot2, spot1, spot3, 0.9], [70, spot1, spot2, spot5, 0.95], [90, spot3, spot1, spot6, 0.9],
+				[50, -spot2, -spot1, spot2, 0.9], [70, -spot1, -spot2, spot2, 0.95], [90, -spot3, -spot1, spot2, 0.9], [50, -spot2, -spot1, spot3, 0.9],
+				[70, -spot1, -spot1, spot5, 0.95], [90, -spot3, -spot1, spot5, 0.9], [50, -spot2, spot1, spot2, 0.9], [70, -spot1, spot2, spot2, 0.95],
+				[90, -spot3, spot1, spot2, 0.9], [50, spot2, -spot2, spot2, 0.9], [70, spot4, -spot1, spot2, 0.95], [70, spot1, spot1, spot6, 0.9]];
+	var clouds = [];
+	for(var i=0; i<confs.length; i++){
+		var cloud = createCloud(confs[i][0], confs[i][1], confs[i][2], confs[i][3], confs[i][4]);
+		clouds.push(cloud);
+	}
+	return clouds;
 }
 
 function createCloud(size, positionX, positionY, positionZ, opacity){
@@ -259,7 +224,10 @@ function createSceneObjects(sceneObject){
 	var sky = createSkySphere((terrainDimension/2), 'textures/sky.jpg');
 	scene.add(sky);
 
-	generateClouds(terrainDimension);
+	var clouds = generateClouds(terrainDimension);
+	for(var i=0; i<clouds.length; i++){
+		scene.add(clouds[i]);
+	}
 
 	var sun = createSun(Math.floor(terrainDimension/40), 'textures/sun.jpg', 100, 200, 900);
 	scene.add(sun);
