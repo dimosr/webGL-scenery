@@ -214,6 +214,33 @@ function createFirTree(height, width, leavesRadius, trunkTextureIMG, leavesTextu
 	return treeContainer;
 }
 
+function createSquareHouse(width, height, roofHeight){
+	var houseContainer = new THREE.Object3D();
+
+	var houseGeometry = new THREE.BoxGeometry(width, height, width);
+	var houseMaterials = [new THREE.MeshBasicMaterial({color:0xFF0000, side: THREE.DoubleSide, shininess: 50}), 
+                     	new THREE.MeshBasicMaterial({color:0x00FF00, side: THREE.DoubleSide, shininess: 50}), 
+                    	new THREE.MeshBasicMaterial({color:0x0000FF, side: THREE.DoubleSide, shininess: 50}), 
+                    	new THREE.MeshBasicMaterial({color:0xFFFF00, side: THREE.DoubleSide, shininess: 50}), 
+                    	new THREE.MeshBasicMaterial({color:0x00FFFF, side: THREE.DoubleSide, shininess: 50}), 
+                    	new THREE.MeshBasicMaterial({color:0xFFFFFF, side: THREE.DoubleSide, shininess: 50})];
+    var houseMaterial = new THREE.MeshFaceMaterial(houseMaterials); 
+	var house = new THREE.Mesh( houseGeometry, houseMaterial);
+
+	var roofGeometry = new THREE.CylinderGeometry(0, width*0.69, roofHeight, 4, 4);
+	var roofMaterial = new THREE.MeshPhongMaterial({color:0x0f2e4c, side: THREE.DoubleSide, shininess: 50});
+	var roof = new THREE.Mesh( roofGeometry, roofMaterial);
+	roof.translateZ(height*0.88);
+	roof.rotateOnAxis(new THREE.Vector3(1,0,0), degInRad(90));
+	roof.rotateOnAxis(new THREE.Vector3(0,1,0), degInRad(45));
+
+	houseContainer.add(house);
+	houseContainer.add(roof);
+	houseContainer.translateZ(height*0.5);
+
+	return houseContainer;
+}
+
 function createSceneObjects(sceneObject){
 	var terrainDimension = 2000;
 	var ground = createGroundSurface(terrainDimension, terrainDimension, 'textures/grass.png', renderer.getMaxAnisotropy());
@@ -240,6 +267,9 @@ function createSceneObjects(sceneObject){
 	for(var i=0; i<trees.length; i++){
 		scene.add(trees[i]);
 	}
+
+	var house = createSquareHouse(200, 200, 150);
+	scene.add(house);
 
     var ambientLight = new THREE.AmbientLight(0xffffff);
     scene.add(ambientLight);
