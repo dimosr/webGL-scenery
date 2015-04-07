@@ -163,6 +163,28 @@ function createSun(radius, textureIMG, positionX, positionY, positionZ){
 	return sunContainer;
 }
 
+function generateTrees(terrainDim){
+	var t = terrainDim;
+	var spots1 = [[t/10, t/10], [t/8, t/8], [t/6, t/6], [t/10, t/6], [t/1, t/3], [t/4, t/8], [t/2, t/2.5], [t/2, t/10], [t/10, t/8]];
+	var spots2 = [[t/3, t/4],[t/3, t/6], [t/8, t/4], [t/6, t/8], [t, t], [t/2, t/8], [t, t/10], [t/4, t/4], [t/10, t/4]];
+	var spots3 = [[t/1, t/6],[t/6, t/4], [t/6, t/10], [t/2, t/6], [t/2, t/2], [t, t/8], [t/10,t], [t/8, t/2], [t/10,t/2]];
+	var trees = [];
+
+	for(var i=0; i<spots1.length; i++){
+		var tree = createFirTree(350, 4, 50, 'textures/trunk.png', 'textures/fir.png', spots1[i][0], 0, spots1[i][1]);
+		trees.push(tree);
+	}
+	for(var i=0; i<spots2.length; i++){
+		var tree = createTree(350, 4, 25, 'textures/trunk.png', 'textures/leaves.png', spots2[i][0], 0, spots2[i][1], "sphere");
+		trees.push(tree);
+	}
+	for(var i=0; i<spots3.length; i++){
+		var tree = createTree(350, 4, 25, 'textures/trunk.png', 'textures/leaves.png', spots3[i][0], 0, spots3[i][1], "torrus");
+		trees.push(tree);
+	}
+	return trees;
+}
+
 function createTree(height, width, leavesRadius, trunkTextureIMG, leavesTextureIMG, positionX, positionY, positionZ, type){
 	var treeContainer = new THREE.Object3D();
 
@@ -197,13 +219,13 @@ function createTree(height, width, leavesRadius, trunkTextureIMG, leavesTextureI
 	treeContainer.add(leaves);
 	treeContainer.rotateOnAxis(new THREE.Vector3( 1, 0, 0 ), degInRad(90));
 	treeContainer.translateZ(positionZ);
-	treeContainer.translateY(positionY);
+	treeContainer.translateY(positionY + height/3);
 	treeContainer.translateX(positionX);
 
 	return treeContainer;
 }
 
-function createFirTree(height, width, leavesRadius, trunkTextureIMG, leavesTextureIMG, positionX, positionY, positionZ, type){
+function createFirTree(height, width, leavesRadius, trunkTextureIMG, leavesTextureIMG, positionX, positionY, positionZ){
 	var treeContainer = new THREE.Object3D();
 
 	var trunkGeometry = new THREE.CylinderGeometry( width, width, height);
@@ -221,7 +243,7 @@ function createFirTree(height, width, leavesRadius, trunkTextureIMG, leavesTextu
 	treeContainer.add(leaves);
 	treeContainer.rotateOnAxis(new THREE.Vector3( 1, 0, 0 ), degInRad(90));
 	treeContainer.translateZ(positionZ);
-	treeContainer.translateY(positionY);
+	treeContainer.translateY(positionY + height/3);
 	treeContainer.translateX(positionX);
 
 	return treeContainer;
@@ -242,12 +264,14 @@ function createSceneObjects(sceneObject){
 	var sun = createSun(Math.floor(terrainDimension/40), 'textures/sun.jpg', 100, 200, 900);
 	scene.add(sun);
 
-	lake = createLakeEllipsoid("textures/lake.jpg", 600, 600, 0, 700, 5.3);
+	var lake = createLakeEllipsoid("textures/lake.jpg", 600, 600, 0, 700, 5.3);
 	scene.lake = lake;
 	scene.add(lake);
 
-	tree = createFirTree(350, 4, 50, 'textures/trunk.png', 'textures/fir.png', 50, 50, 0, 'sphere');
-	scene.add(tree);
+	var trees = generateTrees(terrainDimension);
+	for(var i=0; i<trees.length; i++){
+		scene.add(trees[i]);
+	}
 
     var ambientLight = new THREE.AmbientLight(0xffffff);
     scene.add(ambientLight);
