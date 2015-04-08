@@ -214,21 +214,26 @@ function createFirTree(height, width, leavesRadius, trunkTextureIMG, leavesTextu
 	return treeContainer;
 }
 
-function createSquareHouse(width, height, roofHeight){
+function createSquareHouse(width, height, roofHeight, wallHorizontalTextureIMG, wallVerticalTextureIMG, roofTextureIMG){
 	var houseContainer = new THREE.Object3D();
 
 	var houseGeometry = new THREE.BoxGeometry(width, height, width);
-	var houseMaterials = [new THREE.MeshBasicMaterial({color:0xFF0000, side: THREE.DoubleSide, shininess: 50}), 
-                     	new THREE.MeshBasicMaterial({color:0x00FF00, side: THREE.DoubleSide, shininess: 50}), 
-                    	new THREE.MeshBasicMaterial({color:0x0000FF, side: THREE.DoubleSide, shininess: 50}), 
-                    	new THREE.MeshBasicMaterial({color:0xFFFF00, side: THREE.DoubleSide, shininess: 50}), 
-                    	new THREE.MeshBasicMaterial({color:0x00FFFF, side: THREE.DoubleSide, shininess: 50}), 
-                    	new THREE.MeshBasicMaterial({color:0xFFFFFF, side: THREE.DoubleSide, shininess: 50})];
+	var wallHorizontalTexture = new THREE.ImageUtils.loadTexture( wallHorizontalTextureIMG );
+	var wallVerticalTexture = new THREE.ImageUtils.loadTexture( wallVerticalTextureIMG );
+	var houseMaterials = [new THREE.MeshBasicMaterial({map: wallVerticalTexture, side: THREE.DoubleSide, shininess: 50}), 
+                     	new THREE.MeshBasicMaterial({map: wallVerticalTexture, side: THREE.DoubleSide, shininess: 50}), 
+                    	new THREE.MeshBasicMaterial({map: wallHorizontalTexture, side: THREE.DoubleSide, shininess: 50}), 
+                    	new THREE.MeshBasicMaterial({map: wallHorizontalTexture, side: THREE.DoubleSide, shininess: 50}), 
+                    	new THREE.MeshBasicMaterial({map: wallHorizontalTexture, side: THREE.DoubleSide, shininess: 50}), 
+                    	new THREE.MeshBasicMaterial({map: wallVerticalTexture, side: THREE.DoubleSide, shininess: 50})];
     var houseMaterial = new THREE.MeshFaceMaterial(houseMaterials); 
 	var house = new THREE.Mesh( houseGeometry, houseMaterial);
 
-	var roofGeometry = new THREE.CylinderGeometry(0, width*0.69, roofHeight, 4, 4);
-	var roofMaterial = new THREE.MeshPhongMaterial({color:0x0f2e4c, side: THREE.DoubleSide, shininess: 50});
+	var roofGeometry = new THREE.CylinderGeometry(0, width*0.7, roofHeight, 4, 4);
+	var roofTexture = new THREE.ImageUtils.loadTexture( roofTextureIMG );
+	roofTexture.wrapS = roofTexture.wrapT = THREE.RepeatWrapping;
+    roofTexture.repeat.set(2,2);
+	var roofMaterial = new THREE.MeshPhongMaterial({map: roofTexture, side: THREE.DoubleSide, shininess: 50});
 	var roof = new THREE.Mesh( roofGeometry, roofMaterial);
 	roof.translateZ(height*0.88);
 	roof.rotateOnAxis(new THREE.Vector3(1,0,0), degInRad(90));
@@ -236,7 +241,7 @@ function createSquareHouse(width, height, roofHeight){
 
 	houseContainer.add(house);
 	houseContainer.add(roof);
-	houseContainer.translateZ(height*0.5);
+	houseContainer.translateZ(height*0.52);
 
 	return houseContainer;
 }
@@ -268,7 +273,7 @@ function createSceneObjects(sceneObject){
 		scene.add(trees[i]);
 	}
 
-	var house = createSquareHouse(200, 200, 150);
+	var house = createSquareHouse(200, 200, 150, 'textures/wall-horizontal.png', 'textures/wall-vertical.png', 'textures/roof.png');
 	scene.add(house);
 
     var ambientLight = new THREE.AmbientLight(0xffffff);
