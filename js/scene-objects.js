@@ -73,10 +73,6 @@ function createLakeEllipsoid(lakeTextureIMG, positionX, positionY, positionZ, la
 	return lakeContainer;
 }
 
-function generateRocks(){
-
-}
-
 function generateClouds(terrainDim){
 	var spot1 = Math.floor(terrainDim/10);
 	var spot2 = Math.floor(terrainDim/5);
@@ -245,6 +241,9 @@ function createSquareHouse(width, height, roofHeight, wallHorizontalTextureIMG, 
 	houseContainer.translateX(positionX);
 	houseContainer.translateY(positionY);
 
+	var helpVertices = {'xMin': (positionX - width/2), 'xMax': (positionX + width/2), 'yMin': (positionY - width/2), 'yMax': (positionY + width/2)};
+	houseContainer.helpVertices = helpVertices;
+
 	return houseContainer;
 }
 
@@ -276,6 +275,7 @@ function createSceneObjects(sceneObject){
 	}
 
 	var house = createSquareHouse(300, 300, 200, 'textures/wall-horizontal.png', 'textures/wall-vertical.png', 'textures/roof.png', -350, -480);
+	scene.helpVertices = house.helpVertices;
 	scene.add(house);
 
     var ambientLight = new THREE.AmbientLight(0xffffff);

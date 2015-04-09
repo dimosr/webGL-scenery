@@ -8,6 +8,9 @@ function canMoveIn(positionX, positionY, sceneObject){
 	if(!outsideRockBoundaries(positionX, positionY, sceneObject)){
 		return false;
 	}
+	if(hittingHouseWall(positionX, positionY, sceneObject)){
+		return false;
+	}
 
 	return true;
 }
@@ -45,4 +48,18 @@ function outsideRockBoundaries(positionX, positionY, scene){
 		}
 	}
 	return outsideRock;
+}
+
+function hittingHouseWall(positionX, positionY, scene){
+	if( (isNear(positionY, scene.helpVertices.yMin, 2)) || (isNear(positionY, scene.helpVertices.yMax, 2)) ){
+		if( (positionX <= scene.helpVertices.xMax) && (positionX >= scene.helpVertices.xMin) ){
+			return true;
+		}
+	}
+	if( isNear(positionX, scene.helpVertices.xMax, 2) ){
+		if( (positionY <= scene.helpVertices.yMax) && (positionY >= scene.helpVertices.yMin) ){
+			return true;
+		}
+	}
+	return false;
 }
