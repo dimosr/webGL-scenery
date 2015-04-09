@@ -247,6 +247,21 @@ function createSquareHouse(width, height, roofHeight, wallHorizontalTextureIMG, 
 	return houseContainer;
 }
 
+function createGithubCoin(positionX, positionY, textureIMG){
+	var coinGeometry = new THREE.TorusGeometry( 10, 10, 16, 25 );
+	var coinTexture = new THREE.ImageUtils.loadTexture( textureIMG );
+	coinTexture.wrapS = coinTexture.wrapT = THREE.RepeatWrapping;
+    coinTexture.repeat.set(2,2);
+	var coinMaterial = new THREE.MeshPhongMaterial({map: coinTexture, side: THREE.DoubleSide, shininess: 50});
+	var coin = new THREE.Mesh( coinGeometry, coinMaterial);
+
+	coin.translateZ(50);
+	coin.translateX(positionX);
+	coin.translateY(positionY);
+	coin.rotateOnAxis(new THREE.Vector3(0,1,0), degInRad(90));
+	return coin;
+}
+
 function createSceneObjects(sceneObject){
 	var terrainDimension = 2000;
 	var ground = createGroundSurface(terrainDimension, terrainDimension, 'textures/grass.png', renderer.getMaxAnisotropy());
@@ -277,6 +292,9 @@ function createSceneObjects(sceneObject){
 	var house = createSquareHouse(300, 300, 200, 'textures/wall-horizontal.png', 'textures/wall-vertical.png', 'textures/roof.png', -350, -480);
 	scene.helpVertices = house.helpVertices;
 	scene.add(house);
+
+	var coin = createGithubCoin(0, 0, 'textures/coin.png');
+	scene.add(coin);
 
     var ambientLight = new THREE.AmbientLight(0xffffff);
     scene.add(ambientLight);
