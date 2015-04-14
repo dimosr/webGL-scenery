@@ -1,10 +1,7 @@
 <html>
 	<head>
 		<title>My first Three.js app</title>
-		<style>
-			body { margin: 0; }
-			canvas { width: 100%; height: 100% }
-		</style>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body>
 		<script src="js/three.min.js"></script>
@@ -14,6 +11,10 @@
 		<script src="js/movement.js"></script>
 		<script src="js/handlers.js"></script>
 		<script src="js/generators.js"></script>
+		<div id="help-message">
+			<span>Try to find and grab the coin. The bar below shows how near you are.</span>
+			
+		</div>
 		<script>
 			var scene = new THREE.Scene();
 			var lastTime = 0, joggingAngle = 0, elapsed=0;
@@ -47,5 +48,6 @@
 			};
 			render();
 		</script>
+		
 	</body>
 </html>
