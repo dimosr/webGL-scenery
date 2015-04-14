@@ -45,4 +45,20 @@ function executeMovement(){
 	if(!outsideCoinBoundaries(cameraNeck.position.x, cameraNeck.position.y, scene)){
 		scene.remove(scene.coin);
 	}
+
+	updateProgressBar('progress', cameraNeck.position.x, cameraNeck.position.y, scene);
+}
+
+function updateProgressBar(divID, positionX, positionY,scene){
+	var progressBar = document.getElementById(divID);
+	var container = progressBar.offsetParent
+
+	var distance = EuclideanDistance(positionX, positionY, scene.coin.position.x, scene.coin.position.y);
+	var maxDistance = EuclideanDistance(positionX, positionY, scene.xBoundary, scene.yBoundary);
+
+	var percent = ((distance/maxDistance)*100).toFixed(2);
+	if(percent > 100 ){
+		percent = 100;
+	}
+	progressBar.style.width = percent + "%";
 }
