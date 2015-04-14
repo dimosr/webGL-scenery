@@ -294,6 +294,7 @@ function createSceneObjects(sceneObject){
 	scene.add(house);
 
 	var coin = createGithubCoin(0, 0, 'textures/coin.png');
+	scene.coin = coin;
 	scene.add(coin);
 
     var ambientLight = new THREE.AmbientLight(0xffffff);

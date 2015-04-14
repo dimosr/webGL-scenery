@@ -63,3 +63,7 @@ function hittingHouseWall(positionX, positionY, scene){
 	}
 	return false;
 }
+
+function rotateCoin(coin, degrees){
+	coin.rotateOnAxis(new THREE.Vector3( 1, 0, 0 ), degInRad(degrees));
+}

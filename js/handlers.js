@@ -40,4 +40,6 @@ function executeMovement(){
 	if(keyMap[70] == true){
 		camera.rotateOnAxis(new THREE.Vector3(1,0,0), degInRad(-8));
 	}
+
+	rotateCoin(scene.coin, 20);
 }
