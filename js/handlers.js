@@ -42,4 +42,7 @@ function executeMovement(){
 	}
 
 	rotateCoin(scene.coin, 20);
+	if(!outsideCoinBoundaries(cameraNeck.position.x, cameraNeck.position.y, scene)){
+		scene.remove(scene.coin);
+	}
 }

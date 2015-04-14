@@ -10,3 +10,12 @@ function isNear(i, iTarget, range){
 		return false;
 	}
 }
+
+function insideCircle(positionX, positionY, centerX, centerY,  radius){
+	if( (Math.pow((positionX - centerX),2) + Math.pow((positionY - centerY),2)) < Math.pow(radius,2) ){
+			return true;
+	}
+	else{
+		return false;
+	}
+}

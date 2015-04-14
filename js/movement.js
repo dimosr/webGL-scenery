@@ -43,11 +43,20 @@ function outsideRockBoundaries(positionX, positionY, scene){
 		var rockRadius = rock.radius;
 		var rockCenterX = rock.positionX;
 		var rockCenterY = rock.positionY;
-		if( (Math.pow((positionX - rockCenterX),2) + Math.pow((positionY - rockCenterY),2)) < Math.pow(rockRadius,2) ){
+		if(insideCircle(positionX, positionY, rockCenterX, rockCenterY, rockRadius)){
 			outsideRock = false;
 		}
 	}
 	return outsideRock;
+}
+
+function outsideCoinBoundaries(positionX, positionY, scene){
+	if(insideCircle(positionX, positionY, scene.coin.position.x, scene.coin.position.y, scene.coin.geometry.parameters.radius)){
+			return false;
+	}
+	else{
+		return true;
+	}
 }
 
 function hittingHouseWall(positionX, positionY, scene){
