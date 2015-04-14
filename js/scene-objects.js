@@ -293,7 +293,7 @@ function createSceneObjects(sceneObject){
 	scene.helpVertices = house.helpVertices;
 	scene.add(house);
 
-	var coin = createGithubCoin(0, 0, 'textures/coin.png');
+	var coin = createGithubCoin(-350, -480, 'textures/coin.png');
 	scene.coin = coin;
 	scene.add(coin);
 

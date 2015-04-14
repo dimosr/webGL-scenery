@@ -11,7 +11,7 @@ function onDocumentKeyUp(event){
 function executeMovement(){
 	var cameraNeck = cameraEquipment.getNeck();
 	var camera = cameraEquipment.getCamera();
-	scene.movementSteps = 2;
+	scene.movementSteps = 10;
 	if(keyMap[37] == true){
 		cameraNeck.rotateOnAxis(new THREE.Vector3(0,1,0), degInRad(4));
 	}
