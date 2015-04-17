@@ -43,7 +43,7 @@ function executeMovement(){
 
 	rotateCoin(scene.coin, 20);
 	if(!outsideCoinBoundaries(cameraNeck.position.x, cameraNeck.position.y, scene)){
-		scene.remove(scene.coin);
+		HandleCoinFound(scene);
 	}
 
 	updateProgressBar('progress', cameraNeck.position.x, cameraNeck.position.y, scene);
@@ -61,4 +61,10 @@ function updateProgressBar(divID, positionX, positionY,scene){
 		percent = 100;
 	}
 	progressBar.style.width = percent + "%";
+}
+
+function HandleCoinFound(scene){
+	scene.remove(scene.coin);
+	scene.sun.children[0].material = new THREE.MeshPhongMaterial( {map: new THREE.ImageUtils.loadTexture( "textures/moon.jpg" ), side: THREE.DoubleSide, shininess: 100 } );
+	scene.sky.material = new THREE.MeshPhongMaterial( {map: new THREE.ImageUtils.loadTexture( "textures/sky-night.jpg" ), side: THREE.DoubleSide, specular: 0x000000} );
 }

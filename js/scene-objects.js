@@ -270,6 +270,7 @@ function createSceneObjects(sceneObject){
 	scene.add(ground);
 
 	var sky = createSkySphere((terrainDimension/2), 'textures/sky.jpg');
+	scene.sky = sky;
 	scene.add(sky);
 
 	var clouds = generateClouds(terrainDimension);
@@ -278,6 +279,7 @@ function createSceneObjects(sceneObject){
 	}
 
 	var sun = createSun(Math.floor(terrainDimension/40), 'textures/sun.jpg', 100, 200, 900);
+	scene.sun = sun;
 	scene.add(sun);
 
 	var lake = createLakeEllipsoid("textures/lake.jpg", 600, 600, 0, 700, 5.3);
