@@ -9,6 +9,10 @@ function onDocumentKeyUp(event){
 }
 
 function executeMovement(){
+	if(keysDisabled){
+		return
+	}
+
 	var cameraNeck = cameraEquipment.getNeck();
 	var camera = cameraEquipment.getCamera();
 	scene.movementSteps = 10;
@@ -43,7 +47,11 @@ function executeMovement(){
 
 	rotateCoin(scene.coin, 20);
 	if(!outsideCoinBoundaries(cameraNeck.position.x, cameraNeck.position.y, scene)){
-		HandleCoinFound(scene);
+		if(!coinFound){
+			coinFound = true;
+			HandleCoinFound(scene);
+			keysDisabled = true;
+		}
 	}
 
 	updateProgressBar('progress', cameraNeck.position.x, cameraNeck.position.y, scene);
@@ -67,4 +75,6 @@ function HandleCoinFound(scene){
 	scene.remove(scene.coin);
 	scene.sun.children[0].material = new THREE.MeshPhongMaterial( {map: new THREE.ImageUtils.loadTexture( "textures/moon.jpg" ), side: THREE.DoubleSide, shininess: 100 } );
 	scene.sky.material = new THREE.MeshPhongMaterial( {map: new THREE.ImageUtils.loadTexture( "textures/sky-night.jpg" ), side: THREE.DoubleSide, specular: 0x000000} );
+	swal({title: "Well Done!",text: "You found the coin! You can now get out and enjoy the moon!",type: "success"},function(){  keysDisabled = false; });
+	//setTimeout(function(){ keysDisabled=false; }, 3000);
 }

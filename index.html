@@ -2,8 +2,10 @@
 	<head>
 		<title>My first Three.js app</title>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 	</head>
 	<body>
+		<script src="js/sweetalert.min.js"></script>
 		<script src="js/three.min.js"></script>
 		<script src="js/scene-objects.js"></script>
 		<script src="js/lib.js"></script>
@@ -24,6 +26,8 @@
 		</img>
 		<script>
 			var scene = new THREE.Scene();
+			var coinFound = false;
+			var keysDisabled = false;
 			var lastTime = 0, joggingAngle = 0, elapsed=0;
 			var keyMap = [];
 
