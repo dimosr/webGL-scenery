@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<title>My webGL Demo Game</title>
+		<meta name="description" content="A webGL Demo game using Three js for demonstration purposes">
+		<meta name="author" content="Raptis Dimos">
+		<link rel="author" href="https://plus.google.com/u/0/109418271395815096221"/>
+		<meta charset="UTF-8">
+		<meta name="keywords" content="web,3d,webgl,threejs,javascript,development,demo">
+		<meta property="og:title" content="My WebGL Demo Game" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="http://www.dimosraptis.com/webGL-scenery" />
+		<meta property="og:image" content="http://www.dimosraptis.com/img/projects/webgl.jpg" />
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+	</head>
+	<body>
+		<script src="js/sweetalert.min.js"></script>
+		<script src="js/three.min.js"></script>
+		<script src="js/scene-objects.js"></script>
+		<script src="js/lib.js"></script>
+		<script src="js/camera.js"></script>
+		<script src="js/movement.js"></script>
+		<script src="js/handlers.js"></script>
+		<script src="js/generators.js"></script>
+
+		<a href="https://github.com/dimosr7/webGL-scenery" id="forkme">
+    	</a>
+		<div id="help-message">
+			<span>Try to find and grab the coin. The bar below shows how near you are.</span>
+			<div id="bar">
+				<div id="progress"></div>
+			</div>
+		</div>
+		<img id="controls" src="img/controls.png" alt="control buttons" >
+		</img>
+		<script>
+			if(!webgl_support()){
+				document.getElementById("help-message").style.display = "none";
+				document.getElementById("controls").style.display = "none";
+				sweetAlert({title: "Your graphics card or your browser does not seem to support WebGL!",text: "Find out how to get it at <a href='http://get.webgl.org/' style='color:#00c'>here</a>.",type: "error", html: true});
+			}
+			else{
+				var scene = new THREE.Scene();
+				var coinFound = false;
+				var keysDisabled = false;
+				var lastTime = 0, joggingAngle = 0, elapsed=0;
+				var keyMap = [];
+
+				var renderer = new THREE.WebGLRenderer({ antialias: true });
+				renderer.shadowMapEnabled = true;
+				renderer.shadowMapType = THREE.PCFSoftShadowMap;
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.body.appendChild( renderer.domElement );
+
+				createSceneObjects(scene);
+			
+    			var cameraEquipment = createCameraEquipment();
+    			scene.add(cameraEquipment.neck);
+
+				document.addEventListener("keydown", onDocumentKeyDown, true); 
+				document.addEventListener("keyup", onDocumentKeyUp, true);
+
+				var render = function () {
+					requestAnimationFrame( render );
+					renderer.render(scene, cameraEquipment.getCamera());
+
+					var timeNow = new Date().getTime();
+    				if (lastTime != 0) {
+      					elapsed = timeNow - lastTime;
+      				}
+      				lastTime = timeNow;
+
+      				executeMovement();
+				};
+				render();
+			}
+		</script>
+		
+	</body>
+</html>
