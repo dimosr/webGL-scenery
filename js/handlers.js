@@ -76,5 +76,12 @@ function HandleCoinFound(scene){
 	scene.sun.children[0].material = new THREE.MeshPhongMaterial( {map: new THREE.ImageUtils.loadTexture( "textures/moon.jpg" ), side: THREE.DoubleSide, shininess: 100 } );
 	scene.sky.material = new THREE.MeshPhongMaterial( {map: new THREE.ImageUtils.loadTexture( "textures/sky-night.jpg" ), side: THREE.DoubleSide, specular: 0x000000} );
 	swal({title: "Well Done!",text: "You found the coin! You can now get out and enjoy the moon!",type: "success"},function(){  keysDisabled = false; });
-	//setTimeout(function(){ keysDisabled=false; }, 3000);
 }
+
+function webgl_support() { 
+   try{
+    var canvas = document.createElement( 'canvas' ); 
+    return !! window.WebGLRenderingContext && ( 
+         canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) );
+   }catch( e ) { return false; } 
+ };

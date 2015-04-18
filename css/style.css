@@ -25,7 +25,7 @@ canvas {
 	height: 100%;
 }
 
-.controls{
+#controls{
 	position: absolute;
 	right:30px;
 	bottom: 10px;
