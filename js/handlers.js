@@ -73,6 +73,7 @@ function updateProgressBar(divID, positionX, positionY,scene){
 
 function HandleCoinFound(scene){
 	scene.remove(scene.coin);
+	document.getElementById("help-message").style.display = "none";
 	scene.sun.children[0].material = new THREE.MeshPhongMaterial( {map: new THREE.ImageUtils.loadTexture( "textures/moon.jpg" ), side: THREE.DoubleSide, shininess: 100 } );
 	scene.sky.material = new THREE.MeshPhongMaterial( {map: new THREE.ImageUtils.loadTexture( "textures/sky-night.jpg" ), side: THREE.DoubleSide, specular: 0x000000} );
 	swal({title: "Well Done!",text: "You found the coin! You can now get out and enjoy the moon!",type: "success"},function(){  keysDisabled = false; });
