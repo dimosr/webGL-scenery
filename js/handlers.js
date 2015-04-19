@@ -68,6 +68,7 @@ function updateProgressBar(divID, positionX, positionY,scene){
 	if(percent > 100 ){
 		percent = 100;
 	}
+	percent = reversePercentage(percent);
 	progressBar.style.width = percent + "%";
 }
 
