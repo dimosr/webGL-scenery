@@ -1,6 +1,13 @@
 body{
 	margin: 0;
 }
+#loader{
+	position:absolute;
+	top: 40%;
+	left: 40%;
+	width:20%;
+	height:20%;
+}
 #help-message{	
 	position: absolute; 
 	top: 30px;

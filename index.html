@@ -32,9 +32,14 @@
 				<div id="progress"></div>
 			</div>
 		</div>
+			<img id="loader" src="img/loader.gif"></img>
 		<img id="controls" src="img/controls.png" alt="control buttons" >
 		</img>
 		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				setInterval(function(){ document.getElementById("loader").style.display="none"; }, 750);
+			});
+
 			if(!webgl_support()){
 				document.getElementById("help-message").style.display = "none";
 				document.getElementById("controls").style.display = "none";
